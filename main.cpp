@@ -1,5 +1,5 @@
 /*
-  foo_input_pxtone, a Pxtone chiptune / lo-tech music decoder for foobar2000
+  foo_input_pxtone, a pxtone chiptune / lo-tech music decoder for foobar2000
   Copyright (C) 2005 Studio Pixel
   Copyright (C) 2015 Wilbert Lee
 
