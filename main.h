@@ -25,27 +25,30 @@
 #define GET_PXTONE_ADDR(FUNC, TYPE, NAME) p_pxtone->FUNC = \
 reinterpret_cast<TYPE>(GetProcAddress(p_pxtone->instance, NAME))
 
-typedef bool(__cdecl *LPPX_READY)(HWND, int, int, int, float, bool, void *);
-typedef bool(__cdecl *LPPX_RESET)(HWND, int, int, int, float, bool, void *);
-typedef void *(__cdecl *LPPX_GETDIRECTSOUND)(void);
-typedef const char *(__cdecl *LPPX_GETLASTERROR)(void);
-typedef void(__cdecl *LPPX_GETQUALITY)(int *, int *, int *, int *);
-typedef bool(__cdecl *LPPX_RELEASE)(void);
-typedef bool(__cdecl *LPPXT_LOAD)(HMODULE, const char *, const char *);
-typedef bool(__cdecl *LPPXT_READ)(void *, int);
-typedef bool(__cdecl *LPPXT_RELEASE)(void);
-typedef bool(__cdecl *LPPXT_START)(int, int);
-typedef int(__cdecl *LPPXT_FADEOUT)(int);
-typedef void(__cdecl *LPPXT_SETVOLUME)(float);
-typedef int(__cdecl *LPPXT_STOP)(void);
-typedef bool(__cdecl *LPPXT_ISSTREAMING)(void);
-typedef void(__cdecl *LPPXT_SETLOOP)(bool);
-typedef void(__cdecl *LPPXT_GETINFORMATION)(int *, float *, int *, int *);
-typedef int(__cdecl *LPPXT_GETREPEATMEAS)(void);
-typedef int(__cdecl *LPPXT_GETPLAYMEAS)(void);
-typedef const char* (__cdecl *LPPXT_GETNAME)(void);
-typedef const char* (__cdecl *LPPXT_GETCOMMENT)(void);
-typedef bool(__cdecl *LPPXT_VOMIT)(void *, int);
+typedef bool		(__cdecl *PXPROC1)(HWND, int, int, int, float, bool, void *);
+typedef void *		(__cdecl *PXPROC2)(void);
+typedef const char *(__cdecl *PXPROC3)(void);
+typedef void		(__cdecl *PXPROC4)(int *, int *, int *, int *);
+typedef bool		(__cdecl *PXPROC5)(void);
+typedef bool		(__cdecl *PXPROC6)(HMODULE, const char *, const char *);
+typedef bool		(__cdecl *PXPROC7)(void *, int);
+typedef bool		(__cdecl *PXPROC8)(int, int);
+typedef int			(__cdecl *PXPROC9)(int);
+typedef void		(__cdecl *PXPROC10)(float);
+typedef int			(__cdecl *PXPROC11)(void);
+typedef void		(__cdecl *PXPROC12)(bool);
+typedef void		(__cdecl *PXPROC13)(int *, float *, int *, int *);
+typedef const char *(__cdecl *PXPROC14)(void);
+
+enum {
+	pxtone_bits_per_sample = 16,
+	pxtone_channels = 2,
+	pxtone_sample_rate = 44100,
+
+	pxtone_step_buffer_size = 512,
+	pxtone_bytes_per_sample = pxtone_bits_per_sample / 8,
+	pxtone_total_sample_width = pxtone_bytes_per_sample * pxtone_channels,
+};
 
 typedef struct _loop_info {
 	float bpm;
@@ -55,46 +58,36 @@ typedef struct _loop_info {
 
 typedef struct _pxtone_decoder {
 	HMODULE instance;
-	LPPX_READY ready;
-	LPPX_RESET reset;
-	LPPX_GETDIRECTSOUND get_direct_sound;
-	LPPX_GETLASTERROR get_last_error;
-	LPPX_GETQUALITY get_quality;
-	LPPX_RELEASE release;
-	LPPXT_LOAD tune_load;
-	LPPXT_READ tune_read;
-	LPPXT_RELEASE tune_release;
-	LPPXT_START tune_start;
-	LPPXT_FADEOUT tune_fade_out;
-	LPPXT_SETVOLUME tune_set_vol;
-	LPPXT_STOP tune_stop;
-	LPPXT_ISSTREAMING tune_is_streaming;
-	LPPXT_SETLOOP tune_set_loop;
-	LPPXT_GETINFORMATION tune_get_inf;
-	LPPXT_GETREPEATMEAS tune_get_repeat;
-	LPPXT_GETPLAYMEAS tune_get_play;
-	LPPXT_GETNAME tune_get_name;
-	LPPXT_GETCOMMENT tune_get_com;
-	LPPXT_VOMIT tune_vomit;
+	PXPROC1 ready;
+	PXPROC1 reset;
+	PXPROC2 get_direct_sound;
+	PXPROC3 get_last_error;
+	PXPROC4 get_quality;
+	PXPROC5 release;
+	PXPROC6 tune_load;
+	PXPROC7 tune_read;
+	PXPROC5 tune_release;
+	PXPROC8 tune_start;
+	PXPROC9 tune_fade_out;
+	PXPROC10 tune_set_vol;
+	PXPROC11 tune_stop;
+	PXPROC5 tune_is_streaming;
+	PXPROC12 tune_set_loop;
+	PXPROC13 tune_get_inf;
+	PXPROC11 tune_get_repeat;
+	PXPROC11 tune_get_play;
+	PXPROC14 tune_get_name;
+	PXPROC14 tune_get_com;
+	PXPROC7 tune_vomit;
 } pxtone_decoder, *p_pxtone_decoder;
-
-enum {
-	pxtone_bits_per_sample = 16,
-	pxtone_channels = 2,
-	pxtone_sample_rate = 44100,
-
-	pxtone_step_buffer_size = 512,
-	pxtone_bytes_per_sample = pxtone_bits_per_sample / 8,
-	pxtone_total_sample_width = pxtone_bytes_per_sample *pxtone_channels,
-};
 
 class initquit_pxtone : public initquit {
 public:
 	void on_init();
 	void on_quit();
 protected:
-	p_pxtone_decoder create_pxtone_decoder(const char *p_filename);
-	void destroy_pxtone_decoder(p_pxtone_decoder p_pxtone);
+	p_pxtone_decoder create_decoder(const char *p_filename);
+	void destroy_decoder(p_pxtone_decoder p_pxtone);
 };
 
 class input_pxtone {
