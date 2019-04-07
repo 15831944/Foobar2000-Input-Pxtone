@@ -25,19 +25,19 @@
 #define GET_PXTONE_ADDR(FUNC, TYPE, NAME) p_pxtone->FUNC = \
 reinterpret_cast<TYPE>(GetProcAddress(p_pxtone->instance, NAME))
 
-typedef bool		(__cdecl *PXPROC1)(HWND, int, int, int, float, bool, void *);
-typedef void *		(__cdecl *PXPROC2)(void);
+typedef int (__cdecl *PXPROC9)(int);
+typedef int (__cdecl *PXPROC11)(void);
+typedef void (__cdecl *PXPROC12)(bool);
+typedef void (__cdecl *PXPROC10)(float);
+typedef void (__cdecl *PXPROC4)(int *, int *, int *, int *);
+typedef void (__cdecl *PXPROC13)(int *, float *, int *, int *);
+typedef bool (__cdecl *PXPROC5)(void);
+typedef bool (__cdecl *PXPROC8)(int, int);
+typedef bool (__cdecl *PXPROC7)(void *, int);
+typedef bool (__cdecl *PXPROC6)(HMODULE, const char *, const char *);
+typedef bool (__cdecl *PXPROC1)(HWND, int, int, int, float, bool, void *);
+typedef void *(__cdecl *PXPROC2)(void);
 typedef const char *(__cdecl *PXPROC3)(void);
-typedef void		(__cdecl *PXPROC4)(int *, int *, int *, int *);
-typedef bool		(__cdecl *PXPROC5)(void);
-typedef bool		(__cdecl *PXPROC6)(HMODULE, const char *, const char *);
-typedef bool		(__cdecl *PXPROC7)(void *, int);
-typedef bool		(__cdecl *PXPROC8)(int, int);
-typedef int			(__cdecl *PXPROC9)(int);
-typedef void		(__cdecl *PXPROC10)(float);
-typedef int			(__cdecl *PXPROC11)(void);
-typedef void		(__cdecl *PXPROC12)(bool);
-typedef void		(__cdecl *PXPROC13)(int *, float *, int *, int *);
 typedef const char *(__cdecl *PXPROC14)(void);
 
 enum {
