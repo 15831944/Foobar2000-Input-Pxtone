@@ -126,6 +126,3 @@ public:
 protected:
 	int meas2msecs(p_loop_info p_loop, int measures);
 };
-
-extern pfc::string8 sz_exist_file, sz_target_file;
-extern p_pxtone_decoder m_p_main, m_p_tag;
