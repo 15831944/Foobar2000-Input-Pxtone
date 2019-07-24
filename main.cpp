@@ -1,5 +1,5 @@
 /*
-  foo_input_pxtone, a Pxtone chiptune / lo-tech music decoder for foobar2000
+  Pxtone, a chiptune / lo-tech music decoder for foobar2000
   Copyright (C) 2005 Studio Pixel
   Copyright (C) 2015 Wilbert Lee
 
@@ -20,7 +20,7 @@
 
 #include <cstdio>
 #include <windows.h>
-#include <Shlwapi.h>
+#include <shlwapi.h>
 #include "main.h"
 
 pfc::string8 sz_exist_file, sz_target_file;
@@ -30,8 +30,8 @@ void initquit_pxtone::on_init() {
 	pfc::string8 sz_temp;
 
 	sz_exist_file = core_api::get_my_full_path();
-	sz_exist_file.truncate(sz_exist_file.scan_filename());
-	sz_exist_file += DLL_NAME ".dll";
+	sz_exist_file.truncate_filename();
+	sz_exist_file.add_string("pxtone.dll");
 	uGetTempPath(sz_temp);
 	uGetTempFileName(sz_temp, pfc::string_filename(sz_exist_file), 0, sz_target_file);
 

@@ -1,5 +1,5 @@
 /*
-  foo_input_pxtone, a Pxtone chiptune / lo-tech music decoder for foobar2000
+  Pxtone, a chiptune / lo-tech music decoder for foobar2000
   Copyright (C) 2005 Studio Pixel
   Copyright (C) 2015 Wilbert Lee
 
@@ -20,7 +20,6 @@
 
 #pragma once
 #include "foobar2000\ATLHelpers\ATLHelpers.h"
-#define DLL_NAME "pxtone"
 #define SAFE_DELETE(X) { if (X != nullptr) { delete X; X = nullptr; } }
 #define GET_PXTONE_ADDR(FUNC, TYPE, NAME) p_pxtone->FUNC = \
 reinterpret_cast<TYPE>(GetProcAddress(p_pxtone->instance, NAME))
