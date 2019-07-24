@@ -1,5 +1,5 @@
 /*
-  Pxtone, a chiptune / lo-tech music decoder for foobar2000
+  foo_input_pxtone, a Pxtone chiptune / lo-tech music decoder for foobar2000
   Copyright (C) 2005 Studio Pixel
   Copyright (C) 2015 Wilbert Lee
 
@@ -25,30 +25,27 @@
 #define GET_PXTONE_ADDR(FUNC, TYPE, NAME) p_pxtone->FUNC = \
 reinterpret_cast<TYPE>(GetProcAddress(p_pxtone->instance, NAME))
 
-typedef int (__cdecl *PXPROC9)(int);
-typedef int (__cdecl *PXPROC11)(void);
-typedef void (__cdecl *PXPROC12)(bool);
-typedef void (__cdecl *PXPROC10)(float);
-typedef void (__cdecl *PXPROC4)(int *, int *, int *, int *);
-typedef void (__cdecl *PXPROC13)(int *, float *, int *, int *);
-typedef bool (__cdecl *PXPROC5)(void);
-typedef bool (__cdecl *PXPROC8)(int, int);
-typedef bool (__cdecl *PXPROC7)(void *, int);
-typedef bool (__cdecl *PXPROC6)(HMODULE, const char *, const char *);
-typedef bool (__cdecl *PXPROC1)(HWND, int, int, int, float, bool, void *);
-typedef void *(__cdecl *PXPROC2)(void);
-typedef const char *(__cdecl *PXPROC3)(void);
-typedef const char *(__cdecl *PXPROC14)(void);
-
-enum {
-	pxtone_bits_per_sample = 16,
-	pxtone_channels = 2,
-	pxtone_sample_rate = 44100,
-
-	pxtone_step_buffer_size = 512,
-	pxtone_bytes_per_sample = pxtone_bits_per_sample / 8,
-	pxtone_total_sample_width = pxtone_bytes_per_sample * pxtone_channels,
-};
+typedef bool(__cdecl *LPPX_READY)(HWND wnd, int ch, int sps, int bps, float buf_sec, bool ds, void *proc);
+typedef bool(__cdecl *LPPX_RESET)(HWND wnd, int ch, int sps, int bps, float buf_sec, bool ds, void *proc);
+typedef void *(__cdecl *LPPX_GETDIRECTSOUND)(void);
+typedef const char *(__cdecl *LPPX_GETLASTERROR)(void);
+typedef void(__cdecl *LPPX_GETQUALITY)(int *p_ch, int *p_sps, int *p_bps, int *p_smp);
+typedef bool(__cdecl *LPPX_RELEASE)(void);
+typedef bool(__cdecl *LPPXT_LOAD)(HMODULE mod, const char *type, const char *file);
+typedef bool(__cdecl *LPPXT_READ)(void *p, int size);
+typedef bool(__cdecl *LPPXT_RELEASE)(void);
+typedef bool(__cdecl *LPPXT_START)(int start, int fade, float vol);
+typedef int(__cdecl *LPPXT_FADEOUT)(int msec);
+typedef void(__cdecl *LPPXT_SETVOLUME)(float vol);
+typedef int(__cdecl *LPPXT_STOP)(void);
+typedef bool(__cdecl *LPPXT_ISSTREAMING)(void);
+typedef void(__cdecl *LPPXT_SETLOOP)(bool loop);
+typedef void(__cdecl *LPPXT_GETINFORMATION)(int *p_beat_num, float *p_beat_tempo, int *p_beat_clock, int *p_meas_num);
+typedef int(__cdecl *LPPXT_GETREPEATMEAS)(void);
+typedef int(__cdecl *LPPXT_GETPLAYMEAS)(void);
+typedef const char* (__cdecl *LPPXT_GETNAME)(void);
+typedef const char* (__cdecl *LPPXT_GETCOMMENT)(void);
+typedef bool(__cdecl *LPPXT_VOMIT)(void *p, int sample);
 
 typedef struct _loop_info {
 	float bpm;
@@ -58,42 +55,51 @@ typedef struct _loop_info {
 
 typedef struct _pxtone_decoder {
 	HMODULE instance;
-	PXPROC1 ready;
-	PXPROC1 reset;
-	PXPROC2 get_direct_sound;
-	PXPROC3 get_last_error;
-	PXPROC4 get_quality;
-	PXPROC5 release;
-	PXPROC6 tune_load;
-	PXPROC7 tune_read;
-	PXPROC5 tune_release;
-	PXPROC8 tune_start;
-	PXPROC9 tune_fade_out;
-	PXPROC10 tune_set_vol;
-	PXPROC11 tune_stop;
-	PXPROC5 tune_is_streaming;
-	PXPROC12 tune_set_loop;
-	PXPROC13 tune_get_inf;
-	PXPROC11 tune_get_repeat;
-	PXPROC11 tune_get_play;
-	PXPROC14 tune_get_name;
-	PXPROC14 tune_get_com;
-	PXPROC7 tune_vomit;
+	LPPX_READY ready;
+	LPPX_RESET reset;
+	LPPX_GETDIRECTSOUND get_direct_sound;
+	LPPX_GETLASTERROR get_last_error;
+	LPPX_GETQUALITY get_quality;
+	LPPX_RELEASE release;
+	LPPXT_LOAD tune_load;
+	LPPXT_READ tune_read;
+	LPPXT_RELEASE tune_release;
+	LPPXT_START tune_start;
+	LPPXT_FADEOUT tune_fade_out;
+	LPPXT_SETVOLUME tune_set_vol;
+	LPPXT_STOP tune_stop;
+	LPPXT_ISSTREAMING tune_is_streaming;
+	LPPXT_SETLOOP tune_set_loop;
+	LPPXT_GETINFORMATION tune_get_inf;
+	LPPXT_GETREPEATMEAS tune_get_repeat;
+	LPPXT_GETPLAYMEAS tune_get_play;
+	LPPXT_GETNAME tune_get_name;
+	LPPXT_GETCOMMENT tune_get_com;
+	LPPXT_VOMIT tune_vomit;
 } pxtone_decoder, *p_pxtone_decoder;
+
+enum {
+	pxtone_bits_per_sample = 8,
+	pxtone_channels = 2,
+	pxtone_sample_rate = 44100,
+
+	pxtone_step_buffer_size = 512,
+	pxtone_bytes_per_sample = pxtone_bits_per_sample / 8,
+	pxtone_total_sample_width = pxtone_bytes_per_sample * pxtone_channels,
+};
 
 class initquit_pxtone : public initquit {
 public:
 	void on_init();
 	void on_quit();
 protected:
-	p_pxtone_decoder create_decoder(const char *p_filename);
-	void destroy_decoder(p_pxtone_decoder p_pxtone);
+	p_pxtone_decoder create_pxtone_decoder(const char *p_filename);
+	void destroy_pxtone_decoder(p_pxtone_decoder p_pxtone);
 };
 
 class input_pxtone {
 private:
-	byte *m_p_data;
-	t_filesize m_file_size;
+	byte *m_buffer;
 	loop_info m_loop_info;
 	service_ptr_t<file> m_file;
 	t_input_open_reason m_reason;
@@ -102,20 +108,23 @@ public:
 	~input_pxtone();
 	static bool g_is_our_path(const char *p_path, const char *p_extension);
 
-	void read_custom_data(p_pxtone_decoder p_pxtone, t_filesize size, abort_callback &p_abort);
+	void read_custom_data(p_pxtone_decoder p_pxtone, abort_callback &p_abort);
 	void get_info(file_info &p_info, abort_callback &p_abort);
 	void open(service_ptr_t<file> p_filehint, const char *p_path, t_input_open_reason p_reason, abort_callback &p_abort);
 	void decode_initialize(unsigned int p_flags, abort_callback &p_abort);
 	bool decode_run(audio_chunk &p_chunk, abort_callback &p_abort);
 	void decode_seek(double p_seconds, abort_callback &p_abort);
-	bool decode_can_seek();
+	bool decode_can_seek() { return true; }
 
 	t_filestats get_file_stats(abort_callback & p_abort) { return m_file->get_stats(p_abort); }
 	void decode_on_idle(abort_callback & p_abort) { m_file->on_idle(p_abort); }
-	bool decode_get_dynamic_info(file_info &p_out, double &p_timestamp_delta);
+	bool decode_get_dynamic_info(file_info &p_out, double &p_timestamp_delta) { return false; }
 	bool decode_get_dynamic_info_track(file_info &p_out, double &p_timestamp_delta) { return false; }
 	static bool g_is_our_content_type(const char *p_content_type) { return false; }
-	void retag(const file_info &p_info, abort_callback &p_abort);
+	void retag(const file_info &p_info, abort_callback &p_abort) {}
 protected:
 	int meas2msecs(p_loop_info p_loop, int measures);
 };
+
+extern pfc::string8 sz_exist_file, sz_target_file;
+extern p_pxtone_decoder m_p_main, m_p_tag;
