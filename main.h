@@ -1,5 +1,5 @@
 /*
-  Pxtone, a chiptune / lo-tech music decoder for foobar2000
+  Pxtone, a chiptune / lo-tech music decoder
   Copyright (C) 2005 Studio Pixel
   Copyright (C) 2015 Wilbert Lee
 
