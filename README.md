@@ -1,6 +1,6 @@
 ## Overview
 
-<div align=center><img src="https://github.com/Etercyber/foo_input_pxtone/blob/master/logo.png" width="400px"/></div>
+<div align=center><img src="https://github.com/Etercyber/foo_input_pxtone/blob/master/res/logo.png" width="400px"/></div>
 
 > A pxtone chiptune / lo-tech music player.<br>
 
