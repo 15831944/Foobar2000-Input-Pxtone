@@ -231,5 +231,6 @@ DECLARE_COMPONENT_VERSION("Pxtone", "0.9.1", \
 "Pxtone Collage is a chiptune / lo-tech music decoder for Windows.\n" \
 "The great programmer of Pxtone Collage is Pixel, who is celebrated as the programmer of 'Cave Story'.\n");
 DECLARE_FILE_TYPE("Pxtone Tune Sound Format", "*.PTTUNE;*.PTCOP");
+
 // This will prevent users from renaming your component around (important for proper troubleshooter behaviors) or loading multiple instances of it.
 VALIDATE_COMPONENT_FILENAME("foo_input_pxtone.dll");
