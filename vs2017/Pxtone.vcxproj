@@ -6,18 +6,64 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\pxtn.h" />
+    <ClInclude Include="..\src\pxtnDelay.h" />
+    <ClInclude Include="..\src\pxtnDescriptor.h" />
+    <ClInclude Include="..\src\pxtnError.h" />
+    <ClInclude Include="..\src\pxtnEvelist.h" />
+    <ClInclude Include="..\src\pxtnMaster.h" />
+    <ClInclude Include="..\src\pxtnMax.h" />
+    <ClInclude Include="..\src\pxtnMem.h" />
+    <ClInclude Include="..\src\pxtnOverDrive.h" />
+    <ClInclude Include="..\src\pxtnPulse_Frequency.h" />
+    <ClInclude Include="..\src\pxtnPulse_Noise.h" />
+    <ClInclude Include="..\src\pxtnPulse_NoiseBuilder.h" />
+    <ClInclude Include="..\src\pxtnPulse_Oggv.h" />
+    <ClInclude Include="..\src\pxtnPulse_Oscillator.h" />
+    <ClInclude Include="..\src\pxtnPulse_PCM.h" />
+    <ClInclude Include="..\src\pxtnService.h" />
+    <ClInclude Include="..\src\pxtnText.h" />
+    <ClInclude Include="..\src\pxtnUnit.h" />
+    <ClInclude Include="..\src\pxtnWoice.h" />
+    <ClInclude Include="..\src\pxtoneNoise.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\Pxtone.cpp" />
+    <ClCompile Include="..\src\pxtnDelay.cpp" />
+    <ClCompile Include="..\src\pxtnDescriptor.cpp" />
+    <ClCompile Include="..\src\pxtnError.cpp" />
+    <ClCompile Include="..\src\pxtnEvelist.cpp" />
+    <ClCompile Include="..\src\pxtnMaster.cpp" />
+    <ClCompile Include="..\src\pxtnMem.cpp" />
+    <ClCompile Include="..\src\pxtnOverDrive.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_Frequency.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_Noise.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_NoiseBuilder.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_Oggv.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_Oscillator.cpp" />
+    <ClCompile Include="..\src\pxtnPulse_PCM.cpp" />
+    <ClCompile Include="..\src\pxtnService.cpp" />
+    <ClCompile Include="..\src\pxtnService_moo.cpp" />
+    <ClCompile Include="..\src\pxtnText.cpp" />
+    <ClCompile Include="..\src\pxtnUnit.cpp" />
+    <ClCompile Include="..\src\pxtnWoice.cpp" />
+    <ClCompile Include="..\src\pxtnWoicePTV.cpp" />
+    <ClCompile Include="..\src\pxtnWoice_io.cpp" />
+    <ClCompile Include="..\src\pxtoneNoise.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <SccProjectName />
     <SccLocalPath />
     <ProjectGuid>{3346F87E-EE5C-4E09-B4D6-AA5AEC2B5695}</ProjectGuid>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -29,17 +75,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>foo_input_pxtone</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <StringPooling>true</StringPooling>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <Optimization>Full</Optimization>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBPISTON_EXPORTS;EXTERN_COMPONENT_OBJECT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerListingLocation>
       </AssemblerListingLocation>
       <PrecompiledHeaderOutputFile>
@@ -48,7 +93,7 @@
       </ObjectFileName>
       <ProgramDataBaseFileName>
       </ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>..\foo_sdk;..\..\library\wtl10_8356\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\foo_sdk;..\..\..\lib\wtl10-8356\include;deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -59,8 +104,7 @@
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TypeLibraryName>
-      </TypeLibraryName>
+      <TypeLibraryName>.\Release\libpiston.tlb</TypeLibraryName>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <TargetEnvironment>Win32</TargetEnvironment>
     </Midl>
@@ -70,8 +114,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>
-      </OutputFile>
+      <OutputFile>.\Release\libpiston.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -82,8 +125,8 @@
       </IgnoreAllDefaultLibraries>
       <ImportLibrary>
       </ImportLibrary>
-      <AdditionalDependencies>pfc.lib;foobar2000_SDK.lib;foobar2000_ATL_helpers.lib;foobar2000_sdk_helpers.lib;foobar2000_component_client.lib;shared.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\foo_sdk\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>pfc_vs2019_release.lib;foobar2000_SDK_vs2019_release.lib;foobar2000_ATL_helpers_vs2019_release.lib;foobar2000_sdk_helpers_vs2019_release.lib;foobar2000_component_client_vs2019_release.lib;shared.lib;comctl32.lib;libvorbis.lib;libvorbisfile.lib;libogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\foo_sdk\lib;deps\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile />
       <OptimizeReferences>true</OptimizeReferences>
@@ -92,12 +135,6 @@
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\Pxtone.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\Pxtone.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
